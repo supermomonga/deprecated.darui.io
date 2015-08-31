@@ -4,3 +4,11 @@
 My personal website [だるい](#)'s source repository.
 
 If you notice any wrong mention, typo, or any mistakes, you can send me a Pull Request.
+
+## Tasks
+
+- [X] Index page (List articles)
+- [X] Article page
+- [ ] Search articles by keyword
+- [ ] Search articles by tag
+- [ ] RSS feed

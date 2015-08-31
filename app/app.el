@@ -32,6 +32,11 @@
 (setq layout-file-path (concat theme-dir "layout.html"))
 (setq blog-title "だるい")
 
+;; Logging
+(setq elnode--do-error-logging nil)
+;; (setq elnode-msg-levels (list :info :status :debug :warning))
+(setq elnode-log-files-directory (concat data-dir "/logs"))
+(setq elnode-error-log-to-messages nil)
 
 (setq app-routes
       '(("^.*//$" . index-handler)
@@ -49,6 +54,16 @@
 
 (defun productionp ()
   (equal (elnode-env) 'production))
+
+(defmacro tapa (obj &rest body)
+  `(let ((it ,obj))
+     ,@body)
+  obj)
+
+(defmacro tapp (obj &optional prefix)
+  `(progn
+     (message (concat (or ,prefix "") "%s") ,obj)
+     ,obj))
 
 (defun view (view-name)
   (with-temp-buffer
@@ -113,7 +128,7 @@
                (to-str (plist-get date :hour-start))
                (to-str (plist-get date :minute-start)))))
 
-(defvar default-article-published-at "1970-01-01 09:00")
+(setq default-article-published-at "1970-01-01 09:00")
 
 (defun get-article (file-path)
   (with-temp-buffer
@@ -124,10 +139,10 @@
            (tags (mapcar (lambda (it) (ht ("tag" it)))
                          (s-split ", *"
                                   (or (gethash :keywords properties) "") t)))
-           (published_at (or
-                          (let* ((date (cadar (gethash :date properties))))
-                            (if date (org-date-to-str date)))
-                          default-article-published-at))
+           (date (cadar (gethash :date properties)))
+           (published_at (if date
+                             (org-date-to-str date)
+                           default-article-published-at))
            (position (time-to-seconds (date-to-time published_at)))
            (content (org-to-html file-path)))
       (ht ("href" route-path)
@@ -154,5 +169,3 @@
 (elnode-start 'root-handler :port (or (getenv "ELNODE_PORT") 80) :host (or (getenv "ELNODE_HOST") "0.0.0.0"))
 (message "--> Server started.")
 
-
-;; (elnode-stop (or (getenv "ELNODE_PORT") 80))
