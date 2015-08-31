@@ -1,0 +1,71 @@
+#+TITLE: だるいエントリー
+#+AUTHOR: momonga
+#+DATE: <2015-08-29 11:22>
+#+KEYWORDS: Emacs Lisp, だるさ, メモ
+
+
+* めちゃだる
+
+** Sub Heading
+   hi
+
+** Sub Heading2
+   hi2
+
+** src sample
+
+#+BEGIN_SRC emacs-lisp
+(setq hogehoge "ok")
+(+ 1 10)
+(message "%s"
+  (gethash :title (ht<-plist (org-export-get-environment))))
+(gethash :keywords (ht<-plist (org-export-get-environment)))
+(gethash :no (ht<-plist (org-export-get-environment)))
+;; comment out
+#+END_SRC
+
+* org article's environments
+
+- :id-alist
+- :footnote-definition-alist
+- :translate-alist
+- :back-end
+- :with-todo-keywords
+- :with-timestamps
+- :with-tasks
+- :with-tags
+- :with-tables
+- :with-toc
+- :with-sub-superscript
+- :with-statistics-cookies
+- :with-special-strings
+- :with-smart-quotes
+- :with-priority
+- :with-planning
+- :with-latex
+- :with-inlinetasks
+- :with-footnotes
+- :with-fixed-width
+- :with-entities
+- :with-emphasize
+- :with-email
+- :with-drawers
+- :with-date
+- :with-creator
+- :with-clocks
+- :with-author
+- :with-archived-trees
+- :title
+- :time-stamp-file
+- :select-tags
+- :section-numbers
+- :preserve-breaks
+- :language
+- :keywords
+- :headline-levels
+- :exclude-tags
+- :email
+- :description
+- :date
+- :creator
+- :author

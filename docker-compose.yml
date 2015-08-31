@@ -1,0 +1,11 @@
+emacs:
+  build: .
+  environment:
+    - SERVER_NAME=emacs_server
+  ports:
+    - "8081:80"
+    - "1234:1234"
+  volumes:
+    - ./serverd:/root/serverd
+    - ./dot-emacs.d:/root/.emacs.d
+    - ./data:/root/data

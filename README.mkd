@@ -1,0 +1,63 @@
+
+# Dockerfile for rapid developing Elnode based web-application.
+
+
+```sh
+docker-compose build
+docker-compose up
+```
+
+Then `app/app.el` loaded and you can access this web application via `lvh.me:8081`.
+
+
+# Interactive overwrite web application
+
+This container's emacs will be started as daemon mode, so you can eval eny forms by host machine via TCP protocol.
+
+Which means you can overwrite your web application's feature without restarting server or re-build docker container.
+
+```elisp
+;; First, eval this progn to use TCP connection.
+(progn
+  (require 'server)
+  (setq server-host "0.0.0.0")
+  (setq server-port "1234")
+  (setq server-use-tcp t)
+  (setq server-name "emacs_server")
+  ;; You need to set "serverd" dir to find auth file
+  (setq server-auth-dir "path-to-serverd-dir"))
+
+;; Eval any forms in emacs daemon in container
+(server-eval-at "emacs_server" '(+ 1 10)) ;; => 11
+
+;; Overwrite request handler
+(server-eval-at "emacs_server"
+                '(defun my-test-handler (httpcon)
+                   "Demonstration function"
+                   (elnode-http-start httpcon 200 '("Content-type" . "text/html"))
+                   (elnode-http-return httpcon (format "<html><h1>New handler!</h1><p>%s</p></html>" (emacs-version)))))
+
+```
+
+# for VirtualBox users
+
+If you use OS X or Windows, you must be using VirtualBox's VM to run docker daemon, via docker-machine.
+
+Assuming the VM's name is `default`(It's default name if you use docker toolbox), you need to set portforwarding like following:
+
+```sh
+VBoxManage modifyvm "default" --natpf1 "tcp-port1234,tcp,,1234,,1234"
+VBoxManage modifyvm "default" --natpf1 "udp-port1234,udp,,1234,,1234"
+VBoxManage modifyvm "default" --natpf1 "tcp-port8081,tcp,,8081,,8081"
+VBoxManage modifyvm "default" --natpf1 "udp-port8081,udp,,8081,,8081"
+```
+
+# Deployment
+
+## sloppy.io
+
+Host your docker container at [sloppy.io](http://sloppy.io).
+
+```bash
+sloppy start sloppy.json --var domain:YOUR_FAVORITE_NAME.sloppy.zone
+```
