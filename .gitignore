@@ -3,3 +3,5 @@ dot-emacs.d/*
 !dot-emacs.d/.gitkeep
 serverd/*
 !serverd/.gitkeep
+data/logs/*
+!data/logs/.gitkeep
