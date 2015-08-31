@@ -35,6 +35,7 @@
 ;; Logging
 (setq elnode--do-error-logging nil)
 ;; (setq elnode-msg-levels (list :info :status :debug :warning))
+(setq elnode-msg-levels nil)
 (setq elnode-log-files-directory (concat data-dir "/logs"))
 (setq elnode-error-log-to-messages nil)
 
