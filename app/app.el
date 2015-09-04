@@ -1,6 +1,7 @@
 (prefer-coding-system 'utf-8)
 (require 'package)
 (require 'cl-lib)
+
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (package-initialize t)
 
@@ -13,6 +14,7 @@
          dash
          s
          f
+         htmlize
          ))
 
 (unless (cl-loop for it in dependencies always (package-installed-p it))
@@ -29,6 +31,7 @@
 (setq data-dir "/root/data")
 (setq posts-dir (concat data-dir "/posts/"))
 (setq theme-dir (concat data-dir "/themes/default/"))
+(setq assets-dir (concat theme-dir "assets/"))
 (setq layout-file-path (concat theme-dir "layout.html"))
 (setq blog-title "だるい")
 
@@ -38,6 +41,20 @@
 (setq elnode-msg-levels nil)
 (setq elnode-log-files-directory (concat data-dir "/logs"))
 (setq elnode-error-log-to-messages nil)
+
+;; org
+;; http://orgmode.org/manual/Publishing-options.html
+(setq org-export-default-language "ja")
+(setq org-export-with-section-numbers nil)
+(setq org-html-doctype "html5")
+(setq org-html-html5-fancy t)
+(setq org-html-toplevel-hlevel 3)
+(setq org-src-preserve-indentation nil)
+(setq org-html-htmlize-output-type 'css)
+
+;; htmlize workaround. see http://wenshanren.org/?p=781
+(defun org-font-lock-ensure ()
+  (font-lock-fontify-buffer))
 
 (setq app-routes
       '(("^.*//$" . index-handler)
@@ -77,23 +94,36 @@
 (defun hr ()
   (message "--------------------------------------------------"))
 
+(defun global-context (httpcon)
+  (let* ((request-host (elnode-http-host httpcon))
+         (request-path (elnode-http-pathinfo httpcon))
+         (request-url (concat "http://" request-host request-path))) ;; elnode not supports ssl for now
+  (ht ("request/host" request-host)
+      ("request/path" request-path)
+      ("request/url" request-url)
+      ("hidden" nil))))
+
+(defun render (view context)
+  (let ((context (ht-merge (global-context httpcon) context)))
+    (mustache-render view context)))
+
 (defun render-html (httpcon context &optional code)
   (let ((code (or code 200))
         (layout (f-read-text layout-file-path)))
     (elnode-http-start httpcon code '("Content-type" . "text/html"))
-    (elnode-http-return httpcon (mustache-render layout context))))
+    (elnode-http-return httpcon (render layout context))))
 
 (defun render-org (httpcon file-path)
   (with-temp-buffer
     (insert-file-contents file-path)
     (let* ((article (get-article file-path))
            (title (gethash "title" article))
-           (content (mustache-render (view "article") article))
+           (content (render (view "article") article))
            (context (ht ("title" title) ("yield" content))))
       (render-html httpcon context))))
 
 (defun assets-handler (httpcon)
-  (let ((file-path (concat data-dir (elnode-http-pathinfo httpcon))))
+  (let ((file-path (concat theme-dir (elnode-http-pathinfo httpcon))))
     (if (file-exists-p file-path)
         (elnode-send-file httpcon file-path)
       (elnode-send-404 httpcon))))

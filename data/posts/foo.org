@@ -3,7 +3,6 @@
 #+DATE: <2015-08-29 11:22>
 #+KEYWORDS: Emacs Lisp, だるさ, メモ
 
-
 * めちゃだる
 
 ** Sub Heading
@@ -23,6 +22,14 @@
 (gethash :no (ht<-plist (org-export-get-environment)))
 ;; comment out
 #+END_SRC
+   
+
+#+begin_src ruby
+def hi
+  puts :hi
+end
+#+end_src
+
 
 * org article's environments
 

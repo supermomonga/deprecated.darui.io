@@ -13,9 +13,9 @@ If you notice any wrong mention, typo, or any mistakes, you can send me a Pull R
 - [ ] Search articles by tag
 - [ ] RSS feed
 - Article
-    - [ ] Code block syntax highlight
-    - [ ] Omit headings' number
-    - [ ] Use HTML5 settings
+    - [X] Code block syntax highlight
+    - [X] Omit headings' number
+    - [X] Use HTML5 settings
 - Deploy
     - [ ] automated deploy using CI
     - [ ] Blue-Green deployment
