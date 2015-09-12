@@ -1,0 +1,21 @@
+#+TITLE: Clojureウェブアプリケーションフレームワーク一覧
+#+AUTHOR: momonga
+#+DATE: <2015-09-12 Sat>
+#+KEYWORDS: Clojure
+
+* Clojureウェブアプリケーションフレームワーク一覧
+  GitHubスター数は2015年9月12日時点のもの
+
+| フレームワーク      | 概要 | GitHub スター数 |
+|---------------------+------+-----------------|
+| [[https://github.com/weavejester/compojure][Compojure]]           |      |            2615 |
+| [[https://github.com/metosin/compojure-api][Compojure-api]]       |      |             311 |
+| [[https://github.com/luminus-framework/luminus][Luminus]]             |      |             250 |
+| [[https://github.com/cgrand/moustache][Moustache]]           |      |             244 |
+| [[https://github.com/zubairq/coils][Coils]]               |      |             186 |
+| [[https://github.com/weavejester/duct][Duct]]                |      |             145 |
+| [[https://github.com/caribou/caribou][Caribou]]             |      |             126 |
+| [[https://github.com/slagyr/joodo][Joodo]]               |      |              97 |
+| [[https://github.com/myfreeweb/octohipster][octohipster]]         |      |              77 |
+| [[https://github.com/webnf/webnf][A Web Non-Framework]] |      |              13 |
+| [[https://github.com/boymaas/clocks][Clocks]]              |      |               3 |
