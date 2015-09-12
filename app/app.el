@@ -46,11 +46,13 @@
 ;; http://orgmode.org/manual/Publishing-options.html
 (setq org-export-default-language "ja")
 (setq org-export-with-section-numbers nil)
-(setq org-html-doctype "html5")
-(setq org-html-html5-fancy t)
+;; If we use html5, ATTR_HTML will be ignored
+;; (setq org-html-doctype "html5")
+;; (setq org-html-html5-fancy t)
 (setq org-html-toplevel-hlevel 3)
 (setq org-src-preserve-indentation nil)
 (setq org-html-htmlize-output-type 'css)
+(setq org-html-table-default-attributes '(:class "table table-bordered table-condensed"))
 
 ;; htmlize workaround. see http://wenshanren.org/?p=781
 (defun org-font-lock-ensure ()

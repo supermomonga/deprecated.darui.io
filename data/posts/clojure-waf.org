@@ -1,10 +1,9 @@
 #+TITLE: Clojureウェブアプリケーションフレームワーク一覧
 #+AUTHOR: momonga
-#+DATE: <2015-09-12 Sat>
+#+DATE: <2015-09-12 Sat 21:35>
 #+KEYWORDS: Clojure
 
-* Clojureウェブアプリケーションフレームワーク一覧
-  GitHubスター数は2015年9月12日時点のもの
+GitHubスター数は2015年9月12日時点のもの
 
 | フレームワーク      | 概要 | GitHub スター数 |
 |---------------------+------+-----------------|
@@ -19,3 +18,4 @@
 | [[https://github.com/myfreeweb/octohipster][octohipster]]         |      |              77 |
 | [[https://github.com/webnf/webnf][A Web Non-Framework]] |      |              13 |
 | [[https://github.com/boymaas/clocks][Clocks]]              |      |               3 |
+#+ATTR_HTML: id="moge" class="table table-bordered table-condensed"
