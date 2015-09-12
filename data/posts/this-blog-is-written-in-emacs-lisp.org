@@ -9,9 +9,8 @@
 
   面白い事実として、デーモンモードのEmacsをDockerコンテナで動かすのが思っていた以上に便利だということが分かった。TCPモードで =(server-start)= することでコンテナ内のEmacsにコンテナホストマシンのEmacsから動的にS式を送り込んで評価できる様になる。これによって、Dockerコンテナ内で走っているEmacs Lisp製ウェブアプリケーションのロジックを再起動なしで動的に書き換えることができる。ファイルシステム監視による動的リロードとかだとつまらないけど、TCP経由のEmacs同士の通信でS式を送り込むのはかっこいい。これだけだと別にDockerコンテナ内で走らせる必要はなくて単にEmacsのデーモンモードが便利という話なんだけど、 =docker run= 時にDockerfileでEXPOSE指定されたTCPポートへのフォワーディングを行わなければそのまま本番環境デプロイ用のコンテナとして使えるので、開発環境と本番環境の構築で二度手間がないし、完全に同じ環境で動かすことができるので安心感ある。興味ある人は [[https://github.com/supermomonga/dockerfile-emacs-daemon][github.com/supermomonga/dockerfile-emacs-daemon]] とか [[https://github.com/supermomonga/dockerfile-elnode][github.com/supermomonga/dockerfile-elnode]] とか読むといいと思う。
 
-  実はTCPモードじゃなくてデフォルトのunix domain socketモードでもコンテナ内と外の通信ができるんだけど、使ってる開発マシンがMacBook AirなのでVirtualBoxで動かしたCoreOSマシン（boot2dockerイメージ）を経由してDockerコンテナを動かす形で開発を進める必要があって、その際Dockerのボリュームマウント機能周りで恐らくファイルシステム周辺のバグに遭遇してunix domain socketによる通信はまだ実現できてない。 =make-network-process= 関数の処理を追おうとしたらC言語で書かれた関数だった。今までC言語やファイルシステム周りの低レイヤやってこなかったのでそのツケが来ている。
-
+  実はTCPモードじゃなくてデフォルトのunix domain socketモードでもコンテナ内と外の通信ができるんだけど、使ってる開発マシンがMacBook AirなのでVirtualBoxで動かしたCoreOSマシン（boot2dockerイメージ）を経由してDockerコンテナを動かす形で開発を進める必要があって、その際Dockerのボリュームマウント機能周りで恐らくファイルシステム周辺のバグに遭遇してunix domain socketによる通信はまだ実現できてない。
 
   ともかく、ブログはいい感じに動いてる。DockerコンテナでEmacsデーモン動かす際の知見などが割と貯まっているので、詳しい記事を後日書く予定。
 
-  今年は、Emacs Lispによるモダンなウェブアプリケーション開発のブームが、やってくるぞ！
+  Emacs Lispによるモダンなウェブアプリケーション開発のブームが、やってくるぞ！
