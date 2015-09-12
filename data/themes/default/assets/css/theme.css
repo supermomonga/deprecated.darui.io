@@ -23,6 +23,16 @@ body {
     color: #aaa;
 }
 
+.article article.content{
+    font-size: 1.1rem;
+}
+
+.article article.content p{
+    line-height: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+
 #table-of-contents {
     background-color: #fafafa;
     border: 1px solid #ddd;
