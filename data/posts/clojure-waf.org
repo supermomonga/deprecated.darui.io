@@ -18,4 +18,3 @@ GitHubスター数は2015年9月12日時点のもの
 | [[https://github.com/myfreeweb/octohipster][octohipster]]         |      |              77 |
 | [[https://github.com/webnf/webnf][A Web Non-Framework]] |      |              13 |
 | [[https://github.com/boymaas/clocks][Clocks]]              |      |               3 |
-#+ATTR_HTML: id="moge" class="table table-bordered table-condensed"
