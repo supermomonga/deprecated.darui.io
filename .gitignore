@@ -5,3 +5,6 @@ serverd/*
 !serverd/.gitkeep
 data/logs/*
 !data/logs/.gitkeep
+
+*.tfvars
+.env
