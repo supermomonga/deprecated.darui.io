@@ -1,13 +1,13 @@
-#+TITLE: Emacs Lispでブログエンジン書いた。
+#+TITLE: Emacs Lispでブログエンジン書いた
 #+AUTHOR: momonga
 #+DATE: <2015-09-12 Sat 23:47>
 #+KEYWORDS: Emacs, Docker
 
  このブログはEmacs Lispで書かれていて、CoreOSが入ったマシンにDockerコンテナとしてデプロイされ、動いてる。あなたがこのブログのページをロードする度に、Dockerコンテナ内で走っているEmacsがリクエストをハンドリングして、org-modeで書かれた記事ファイルをhtmlに変換し、用意されたviewに差し込み、レスポンスを返している。[[https://github.com/nicferrier/elnode][elnode]] というEmacsをウェブサーバー化するプロダクト見つけて、気持ちが高まってしまったのが動機。
 
- 記事はorg-modeで書けて、いい感じ。ソースコードは[[https://github.com/supermomonga/darui.io][github.com/supermomonga/darui.io]] にあります。Emacs Lispによるウェブアプリケーション開発、ある程度知見が貯まったので次はSinatra風ウェブアプリケーション作って、その後ドッグフーディングしてちゃんとしたブログエンジンとして書きなおした後に独立したリポジトリに分離したい。
+ 記事はorg-modeで書けて、いい感じ。ソースコードは [[https://github.com/supermomonga/darui.io][github.com/supermomonga/darui.io]] にあります。Emacs Lispによるウェブアプリケーション開発、ある程度知見が貯まったので次はSinatra風ウェブアプリケーション作って、その後ドッグフーディングしてちゃんとしたブログエンジンとして書きなおした後に独立したリポジトリに分離したい。
 
-  知見としては、デーモンモードのEmacsをDockerコンテナで動かすのが意外に便利すぎた。TCPモードで =(server-start)= することでコンテナ内のEmacsにコンテナホストマシンのEmacsから動的にS式を送り込んで評価できる様になる。これだけだと別にDockerコンテナ内で走らせる必要ないんだけど、=docker run= 時にDockerfileでEXPOSE指定されたTCPポートへのフォワーディングを行わなければそのまま本番環境デプロイ用のコンテナとして使えるので、開発環境と本番環境の構築で二度手間がないし、完全に同じ環境で動かすことができるので安心感ある。
+  面白い事実として、デーモンモードのEmacsをDockerコンテナで動かすのが思っていた以上に便利だということが分かった。TCPモードで =(server-start)= することでコンテナ内のEmacsにコンテナホストマシンのEmacsから動的にS式を送り込んで評価できる様になる。これによって、Dockerコンテナ内で走っているEmacs Lisp製ウェブアプリケーションのロジックを再起動なしで動的に書き換えることができる。ファイルシステム監視による動的リロードとかだとつまらないけど、TCP経由のEmacs同士の通信でS式を送り込むのはかっこいい。これだけだと別にDockerコンテナ内で走らせる必要はなくて単にEmacsのデーモンモードが便利という話なんだけど、 =docker run= 時にDockerfileでEXPOSE指定されたTCPポートへのフォワーディングを行わなければそのまま本番環境デプロイ用のコンテナとして使えるので、開発環境と本番環境の構築で二度手間がないし、完全に同じ環境で動かすことができるので安心感ある。興味ある人は [[https://github.com/supermomonga/dockerfile-emacs-daemon][github.com/supermomonga/dockerfile-emacs-daemon]] とか [[https://github.com/supermomonga/dockerfile-elnode][github.com/supermomonga/dockerfile-elnode]] とか読むといいと思う。
 
   実はTCPモードじゃなくてデフォルトのunix domain socketモードでもコンテナ内と外の通信ができるんだけど、使ってる開発マシンがMacBook AirなのでVirtualBoxで動かしたCoreOSマシン（boot2dockerイメージ）を経由してDockerコンテナを動かす形で開発を進める必要があって、その際Dockerのボリュームマウント機能周りで恐らくファイルシステム周辺のバグに遭遇してunix domain socketによる通信はまだ実現できてない。 =make-network-process= 関数の処理を追おうとしたらC言語で書かれた関数だった。今までC言語やファイルシステム周りの低レイヤやってこなかったのでそのツケが来ている。
 
