@@ -33,7 +33,10 @@
 (setq theme-dir (concat data-dir "/themes/default/"))
 (setq assets-dir (concat theme-dir "assets/"))
 (setq layout-file-path (concat theme-dir "layout.html"))
+(setq rss-file-path (concat theme-dir "rss.xml"))
 (setq blog-title "だるい")
+(setq blog-description "だるいブログ")
+(setq blog-url "http://darui.io/")
 
 ;; Logging
 (setq elnode--do-error-logging nil)
@@ -60,10 +63,10 @@
 
 (setq app-routes
       '(("^.*//$" . index-handler)
+        ("^.*//rss.rdf$" . rss-handler)
         ("^.*//posts/\\(.*?\\)/?$" . posts-handler)
         ("^.*//assets/\\(.*\\)$" . assets-handler)
         ("^.*//public/\\(.*\\)$" . public-handler)
-        ("^.*//\\(.*\\)" . app-handler)
         ))
 
 (defun elnode-env ()
@@ -124,6 +127,12 @@
            (context (ht ("title" title) ("yield" content))))
       (render-html httpcon context))))
 
+(defun render-rss (httpcon context &optional code)
+  (let ((code (or code 200))
+        (layout (f-read-text rss-file-path)))
+    (elnode-http-start httpcon code '("Content-type" . "application/xml .rdf; charset=utf-8"))
+    (elnode-http-return httpcon (render layout context))))
+
 (defun assets-handler (httpcon)
   (let ((file-path (concat theme-dir (elnode-http-pathinfo httpcon))))
     (if (file-exists-p file-path)
@@ -133,6 +142,15 @@
 (defun app-handler (httpcon)
   (let ((hello (elnode-http-pathinfo httpcon)))
     (render-html httpcon (ht ("title" "hi") ("yield" (format "Hello, %s" hello))))))
+
+(defun rss-handler (httpcon)
+  (let* ((articles (get-articles))
+         (context (ht
+                   ("title" blog-title)
+                   ("description" blog-description)
+                   ("url" blog-url)
+                   ("articles" articles))))
+    (render-rss httpcon context)))
 
 (defun index-handler (httpcon)
   (let* ((articles (get-articles))
@@ -166,7 +184,9 @@
 (defun get-article (file-path)
   (with-temp-buffer
     (insert-file-contents file-path)
-    (let* ((route-path (concat "/" (f-no-ext (f-relative file-path data-dir))))
+    (let* ((route (f-no-ext (f-relative file-path data-dir)))
+           (route-path (concat "/" route))
+           (route-url (concat blog-url route))
            (properties (ht<-plist (org-export-get-environment)))
            (title (format "%s" (or (car (gethash :title properties)) "No title")))
            (tags (mapcar (lambda (it) (ht ("tag" it)))
@@ -179,6 +199,7 @@
            (position (time-to-seconds (date-to-time published_at)))
            (content (org-to-html file-path)))
       (ht ("href" route-path)
+          ("url" route-url)
           ("title" title)
           ("tags" tags)
           ("published_at" published_at)
