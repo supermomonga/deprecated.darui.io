@@ -1,4 +1,4 @@
-;;; darui.io/app.el --- darui website -*- lexical-binding: t; -*-
+;;; darui.io/app.el --- darui website
 
 ;; Copyright (c) 2015 supermomonga
 
