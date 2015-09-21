@@ -1,7 +1,7 @@
 
 # darui.io
 
-My personal website [だるい](#)'s source repository.
+My personal website [だるい](http://darui.io/)'s source repository.
 
 If you notice any wrong mention, typo, or any mistakes, you can send me a Pull Request.
 
@@ -11,7 +11,7 @@ If you notice any wrong mention, typo, or any mistakes, you can send me a Pull R
 - [X] Article page
 - [ ] Search articles by keyword
 - [ ] Search articles by tag
-- [ ] RSS feed
+- [X] RSS feed
 - Article
     - [X] Code block syntax highlight
     - [X] Omit headings' number
