@@ -77,6 +77,10 @@ body {
     vertical-align: top;
 }
 
+.feedly-btn img {
+    vertical-align: top;
+}
+
 /* Set the colors in <pre> blocks from the Leuven theme */
 pre                                      {margin-bottom: 0;}
 pre span.org-builtin                     {color:#006FE0;font-weight:bold;}
