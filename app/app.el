@@ -1,4 +1,4 @@
-;;; darui.io/app.el --- Realtime preview by eww -*- lexical-binding: t; -*-
+;;; darui.io/app.el --- darui website -*- lexical-binding: t; -*-
 
 ;; Copyright (c) 2015 supermomonga
 
