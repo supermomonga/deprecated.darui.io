@@ -1,0 +1,72 @@
+#+TITLE: Common Lisp 製 Emacs 風エディタ lem のインストールと起動方法
+#+AUTHOR: momonga
+#+DATE: <2015-09-22 Tue 19:15>
+#+KEYWORDS: Common Lisp, lem
+
+Common Lisp で書かれたテキストエディタ [[https://github.com/cxxxr/lem][lem]] を試しました。Common Lisp に触れるのは初めてだったので、環境のセットアップから行いました。
+
+* Roswell のセットアップ
+
+  まずは Common Lisp 環境のセットアップユーティリティである [[https://github.com/snmsts/roswell][Roswell]] をインストールします。GitHub リポジトリの README.md に従えば問題ないでしょう。OS X の場合は以下の様に homebrew にてインストール可能です。
+
+  #+BEGIN_SRC bash
+brew tap snmsts/roswell
+brew install roswell
+ros setup
+  #+END_SRC
+
+
+* sbcl のインストール
+
+  次に処理系 sbcl をインストールします。
+
+  #+BEGIN_SRC bash
+ros install sbcl
+  #+END_SRC
+
+* lem のインストール
+
+  まずは quicklisp の local-projects ディレクトリの位置を調べて移動します。
+
+  #+BEGIN_SRC bash
+ros run --eval "(progn (princ ql:*quicklisp-home*) (exit))"
+  #+END_SRC
+
+  ここでは =/Users/momonga/.roswell/impls/ALL/ALL/quicklisp/= が得られましたが、各自読み替えてください。local-projects ディレクトリに移動して、lem プロジェクトのソースコードをクローンします。
+
+  #+BEGIN_SRC bash
+cd /Users/momonga/.roswell/impls/ALL/ALL/quicklisp/
+cd ./local-projects/
+git clone https://github.com/cxxxr/lem
+  #+END_SRC
+
+  クローンが完了したら、sbcl を起動しインストールを実行します。
+
+  #+BEGIN_SRC bash
+ros run --eval "(progn (ql:quickload :lem) (exit))"
+  #+END_SRC
+
+* lem の起動
+
+  起動スクリプト =lem.ros= を用意します。
+
+  #+BEGIN_SRC bash
+#!/bin/sh
+#|-*- mode:lisp -*-|#
+#|
+exec ros -Q -- $0 "$@"
+|#
+(eval-when (:execute)
+  (ql:quickload :lem))
+
+(defun main (&rest argv)
+  (declare (ignorable argv))
+  (lem:lem))
+  #+END_SRC
+
+  その後、以下のようにして起動します。
+
+
+  #+BEGIN_SRC bash
+ros /path/to/lem.ros
+  #+END_SRC
