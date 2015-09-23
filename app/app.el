@@ -103,6 +103,7 @@
         ("^.*//posts/\\(.*?\\)/?$" . posts-handler)
         ("^.*//assets/\\(.*\\)$" . assets-handler)
         ("^.*//public/\\(.*\\)$" . public-handler)
+        ("^.*//.+$" . 404-handler)
         ))
 
 (defun elnode-env ()
@@ -198,14 +199,21 @@
                    ("yield" content))))
     (render-html httpcon context)))
 
+(defun 404-handler (httpcon)
+  (render-html
+   httpcon
+   (ht ("title"
+        "404 File not found")
+       ("yield"
+        (mst--escape-html "Could not find the page which was you requested.")))
+   404))
+
+(require 'mustache-render)
 (defun posts-handler (httpcon)
   (let ((file-path (concat posts-dir (elnode-http-mapping httpcon 1) ".org")))
     (if (file-exists-p file-path)
         (render-org httpcon file-path)
-      (render-html
-       httpcon
-       (ht ("title" "404 - File not found") ("yield" (format "File `%s` was not found." file-path)))
-       404))))
+      (404-handler httpcon))))
 
 (defun org-date-to-str (date)
   (apply 'format "%s-%s-%s %s:%s"
