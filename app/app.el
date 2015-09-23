@@ -136,6 +136,13 @@
 (defun hr ()
   (message "--------------------------------------------------"))
 
+(defun page-title (title &optional site-title)
+  (if site-title
+      (format "%s - %s"
+              title
+              blog-title)
+    title))
+
 (defun global-context (httpcon)
   (let* ((request-host (elnode-http-host httpcon))
          (request-path (elnode-http-pathinfo httpcon))
@@ -159,7 +166,7 @@
   (with-temp-buffer
     (insert-file-contents file-path)
     (let* ((article (get-article file-path))
-           (title (gethash "title" article))
+           (title (page-title (gethash "title" article) blog-title))
            (content (render (view "article") article))
            (context (ht ("title" title) ("yield" content))))
       (render-html httpcon context))))
@@ -208,7 +215,6 @@
         (mst--escape-html "Could not find the page which was you requested.")))
    404))
 
-(require 'mustache-render)
 (defun posts-handler (httpcon)
   (let ((file-path (concat posts-dir (elnode-http-mapping httpcon 1) ".org")))
     (if (file-exists-p file-path)
