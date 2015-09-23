@@ -1,8 +1,23 @@
 
 body {
+    animation:rainbow 5s infinite;
+    border-width: 2px 0 0 0;
+    border-style: solid;
     background-color: #f5f5f5;
-    border-top: 5px solid #ee7358;
     padding-bottom: 70px;
+}
+@keyframes rainbow {
+    0%   {border-color: #990000;}
+    10%  {border-color: #998000;}
+    20%  {border-color: #996600;}
+    30%  {border-color: #809900;}
+    40%  {border-color: #009900;}
+    50%  {border-color: #009980;}
+    60%  {border-color: #009966;}
+    70%  {border-color: #008099;}
+    80%  {border-color: #000099;}
+    90%  {border-color: #800099;}
+    100% {border-color: #990080;}
 }
 
 .article {
