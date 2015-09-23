@@ -1,4 +1,3 @@
-
 body {
     animation:rainbow 5s infinite;
     border-width: 2px 0 0 0;
@@ -20,9 +19,40 @@ body {
     100% {border-color: #990080;}
 }
 
+.sugoi {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    height: 14rem;
+    line-height: 14rem;
+    margin: 2rem 0;
+    z-index: -1;
+}
+.sugoi1 {
+    animation: sugoi1 2s linear infinite;
+}
+.sugoi2 {
+    animation: sugoi2 1s ease infinite;
+}
+
+@keyframes sugoi1 {
+    0%   { transform: rotate(  0deg); font-size: 1rem; }
+    10%  { transform: rotate(  0deg); font-size: 1rem; }
+    50%  { transform: rotate(720deg); font-size: 10rem; }
+    60%  { transform: rotate(720deg); font-size: 10rem; }
+    100% { transform: rotate(1440deg); font-size: 1rem; }
+}
+@keyframes sugoi2 {
+    0%   { font-size: 0.1rem; }
+    50%  { font-size: 10rem; }
+    100% { font-size: 0.1rem; }
+}
+
+
 .article {
     background-color: #fff;
     color: #505761;
+    z-index: 10;
 }
 
 .article h4 {
