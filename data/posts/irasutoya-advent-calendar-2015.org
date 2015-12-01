@@ -1,7 +1,7 @@
 #+TITLE: いらすとや Advent Calendar 2015 1日目
 #+AUTHOR: momonga
 #+DATE: <2015-12-01 Sat 14:00>
-#+KEYWORDS: いらすとや
+#+KEYWORDS: irasutoya
 
 * いらすとや Advent Calendar 2015 1日目
 
