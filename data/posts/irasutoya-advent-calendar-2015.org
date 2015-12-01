@@ -1,0 +1,18 @@
+#+TITLE: いらすとや Advent Calendar 2015 1日目
+#+AUTHOR: momonga
+#+DATE: <2015-12-01 Sat 14:00>
+#+KEYWORDS: いらすとや
+
+* いらすとや Advent Calendar 2015 1日目
+
+[[http://www.adventar.org/calendars/1221][いらすとや Advent Calendar 2015]] 1日目の記事です。
+
+* お金のために頑張る会社員のイラスト
+
+[[file:https://i.gyazo.com/55137062b6e5c43e2bd53ab84a34aa14.png]]
+
+[[http://www.irasutoya.com/2014/09/blog-post_51.html][http://www.irasutoya.com/2014/09/blog-post_51.html]]
+
+#+BEGIN_QUOTE
+お金につられて一生懸命会社の経営者のために働く、若い会社員（サラリーマン）のイラストです。
+#+END_QUOTE
