@@ -85,6 +85,7 @@
 ;; http://orgmode.org/manual/Publishing-options.html
 (setq org-export-default-language "ja")
 (setq org-export-with-section-numbers nil)
+(setq org-export-with-sub-superscripts nil)
 ;; If we use html5, ATTR_HTML will be ignored
 ;; (setq org-html-doctype "html5")
 ;; (setq org-html-html5-fancy t)
