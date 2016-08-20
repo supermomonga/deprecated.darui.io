@@ -72,7 +72,7 @@
 (setq rss-file-path (concat theme-dir "rss.xml"))
 (setq blog-title "だるい")
 (setq blog-description "だるいブログ")
-(setq blog-url "http://darui.io/")
+(setq blog-url "https://darui.io/")
 
 ;; Logging
 (setq elnode--do-error-logging nil)
