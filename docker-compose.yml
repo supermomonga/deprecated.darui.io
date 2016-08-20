@@ -9,3 +9,5 @@ emacs:
     - ./serverd:/root/serverd
     - ./dot-emacs.d:/root/.emacs.d
     - ./data:/root/data
+# nginx:
+#   image: nginx:stable-alpine
