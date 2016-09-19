@@ -82,9 +82,10 @@ body {
     background-color: #fafafa;
     border: 1px solid #ddd;
     padding: 10px;
-    margin: 0 0 20px 0;
+    margin: 0 0 20px 20px;
     display: block;
     float: none;
+    font-size: 0.9em;
 }
 @media (min-width: 62em) {
     #table-of-contents {
@@ -95,6 +96,17 @@ body {
         margin-bottom: 20px;
         max-width: 300px;
     }
+}
+#table-of-contents ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#table-of-contents ul ul {
+    padding: 0 0 0 15px;
+}
+#text-table-of-contents > ul > li {
+    margin: 0 0 10px 0;
 }
 #table-of-contents h3 {
     font-size: 1.2rem;
@@ -171,4 +183,25 @@ pre span.org-sh-quoted-exec              {color:#FF1493;}
 
 .social-buttons {
     padding: 0 0 20px 0;
+}
+
+.content h3 {
+    padding: 10px 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    background: #f5f5f5;
+}
+#table-of-contents h3 {
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+    background: transparent;
+}
+.content h3:before { content: '# '; }
+.content h4:before { content: '## '; }
+.content h5:before { content: '### '; }
+#table-of-contents h3:before { content: ''; }
+.content h4 {
+    padding: 0 0 5px 0;
+    border-bottom: 5px solid #eee;
 }
