@@ -160,7 +160,7 @@
 (defun render-html (httpcon context &optional code)
   (let ((code (or code 200))
         (layout (f-read-text layout-file-path)))
-    (elnode-http-start httpcon code '("Content-type" . "text/html"))
+    (elnode-http-start httpcon code '("Content-type" . "text/html; charset=utf-8"))
     (elnode-http-return httpcon (render layout context))))
 
 (defun render-org (httpcon file-path)
